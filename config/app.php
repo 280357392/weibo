@@ -2,6 +2,7 @@
 
 return [
 
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -158,7 +159,9 @@ return [
         Illuminate\Redis\RedisServiceProvider::class,
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
+        //Illuminate\Translation\TranslationServiceProvider::class,
+        //将上面的替换，添加中文的错误提示语言包
+        Overtrue\LaravelLang\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
@@ -227,5 +230,11 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+
+
+    //composer require "overtrue/laravel-lang:~3.0"
+    //将项目语言设置为中文，有趣的是放在第一位时失效了。
+    //$ php artisan config:cache
+    'locale' => 'zh-CN',
 
 ];
