@@ -11,6 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+//我们向 http://weibo.test/ 发出了一个请求，
+//则该请求将会由 StaticPagesController 的 home 方法进行处理
+//http://weibo.test
+Route::get('/', 'StaticPagesController@home');
+//http://weibo.test/help
+Route::get('/help', 'StaticPagesController@help');
+//http://weibo.test/about
+Route::get('/about', 'StaticPagesController@about');
