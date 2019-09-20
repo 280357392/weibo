@@ -7,6 +7,15 @@ use Auth;
 
 class SessionsController extends Controller
 {
+
+    public function __construct()
+    {
+        //guest 选项，用于指定一些只允许未登录用户访问的动作
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
+
     //
     public function create()
     {
@@ -22,15 +31,13 @@ class SessionsController extends Controller
 
        if (Auth::attempt($credentials, $request->has('remember'))) {
            session()->flash('success', '欢迎回来！');
-           //Auth::user() 方法来获取 当前登录用户 的信息
-           return redirect()->route('users.show', [Auth::user()]);
+           $fallback = route('users.show', Auth::user());
+           //redirect() 实例提供了一个 intended 方法，该方法可将页面重定向到上一次请求尝试访问的页面上，并接收一个默认跳转地址参数，当上一次请求记录为空时，跳转到默认地址上。
+           return redirect()->intended($fallback);
        } else {
            session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
-           //使用 withInput() 后模板里 old('email') 将能获取到上一次用户提交的内容，这样用户就无需再次输入邮箱等内容：
            return redirect()->back()->withInput();
        }
-
-       return;
     }
 
     public function destroy()

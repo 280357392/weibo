@@ -9,6 +9,17 @@ use Auth;
 
 class UsersController extends Controller
 {
+
+    //PHP 的构造器方法，当一个类对象被创建之前该方法将会被调用。
+    public function __construct()
+    {
+        //第一个为中间件的名称，第二个为要进行过滤的动作
+        $this->middleware('auth', [
+            //除了此处指定的动作以外，所有其他动作都必须登录用户才能访问
+            'except' => ['show', 'create', 'store']
+        ]);
+    }
+
     //get /users/create
      public function create()
     {
@@ -49,11 +60,15 @@ class UsersController extends Controller
 
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
     public function update(User $user, Request $request)
     {
+        //update 是指授权类里的 update 授权方法，$user 对应传参 update 授权方法的第二个参数
+        $this->authorize('update', $user);
+
         $this->validate($request, [
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6'
