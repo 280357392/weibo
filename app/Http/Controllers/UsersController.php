@@ -20,6 +20,12 @@ class UsersController extends Controller
         ]);
     }
 
+    public function index()
+    {
+        $users = User::paginate(10);
+        return view('users.index', compact('users'));
+    }
+
     //get /users/create
      public function create()
     {
@@ -57,13 +63,14 @@ class UsersController extends Controller
         return redirect()->route('users.show', [$user]);
     }
 
-
+    //get /users/{user}/edit
     public function edit(User $user)
     {
         $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
+    // patch /users/{user}
     public function update(User $user, Request $request)
     {
         //update 是指授权类里的 update 授权方法，$user 对应传参 update 授权方法的第二个参数
