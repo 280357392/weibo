@@ -18,6 +18,10 @@ class UsersController extends Controller
             //除了此处指定的动作以外，所有其他动作都必须登录用户才能访问
             'except' => ['show', 'create', 'store']
         ]);
+
+        $this->middleware('auth', [
+            'except' => ['show', 'create', 'store', 'index']
+        ]);
     }
 
     public function index()
@@ -91,5 +95,12 @@ class UsersController extends Controller
         session()->flash('success', '个人资料更新成功！');
 
         return redirect()->route('users.show', $user);
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        session()->flash('success', '成功删除用户！');
+        return back();
     }
 }
