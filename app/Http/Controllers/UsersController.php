@@ -20,6 +20,7 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
+    //post /users
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -27,6 +28,17 @@ class UsersController extends Controller
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|confirmed|min:6'
         ]);
-        return;
+
+        $user = User::create([
+            //获得用户的所有输入数据
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        //使用 session() 方法来访问会话实例。而当我们想存入一条缓存的数据，让它只在下一次的请求内有效时，则可以使用 flash 方法。danger, warning, success, info
+        session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
+        //route() 方法会自动获取 Model 的主键
+        return redirect()->route('users.show', [$user]);
     }
 }
