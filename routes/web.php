@@ -50,3 +50,6 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 
 //我们完成微博的创建和删除只需要两个动作，因此我们可以对 resource 传参 only 键指定只生成某几个动作的路由。
 Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy']]);
+
+Route::get('/users/{user}/followings', 'UsersController@followings')->name('users.followings');
+Route::get('/users/{user}/followers', 'UsersController@followers')->name('users.followers');
