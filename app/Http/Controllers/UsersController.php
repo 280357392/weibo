@@ -19,10 +19,6 @@ class UsersController extends Controller
             //除了此处指定的动作以外，所有其他动作都必须登录用户才能访问
             'except' => ['show', 'create', 'store', 'index', 'confirmEmail']
         ]);
-
-        $this->middleware('auth', [
-            'except' => ['show', 'create', 'store', 'index']
-        ]);
     }
 
     public function index()
