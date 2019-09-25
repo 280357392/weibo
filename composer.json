@@ -60,7 +60,6 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        //代码自动提示，比如点击路由可以跳转到控制器
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "@php artisan ide-helper:generate",
